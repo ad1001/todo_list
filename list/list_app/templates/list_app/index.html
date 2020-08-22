@@ -1,0 +1,43 @@
+{% extends "list_app/header.html"%}
+{% block content %}
+
+<form method="POST" action = "addItem/">
+    <div class="input-field">
+    {% csrf_token %}
+        {{ form.as_p }}
+<div class="center">
+    <button type="submit" class = "waves-effect btn green">
+        Add Element
+    </button>
+    <a href="remove/">
+       
+        <input type="button" value = "Remove Completed"  class = "waves-effect text-white btn red">         
+       
+    </a>
+</div>
+</div>
+
+
+{% if List %}
+    <ul>
+        {% for item in List %}
+            {% if item.completed == True %}
+            <li>
+               <div class="todo-completed">
+                   <s> {{ item.text }} </s>
+            </div>
+                
+            </li>
+            {% else %}
+               <li> <a href="{% url 'complete' item.id %}">{{item.text}}</a> </li>
+
+            <br>
+
+            {% endif %}
+        {% endfor %}
+
+    </ul>
+{% else %}
+    <p>Empty List</p>
+{% endif %}
+{% endblock %}
